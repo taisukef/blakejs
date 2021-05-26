@@ -3,7 +3,7 @@ blakejs ES module version
 
 <!-- [![travis ci](https://travis-ci.org/dcposch/blakejs.svg?branch=master)](https://travis-ci.org/dcposch/blakejs) -->
 
-**blakejs is a pure Javascript implementation of the BLAKE2b and BLAKE2s hash functions.**
+**blakejs is a pure JavaScript implementation of the BLAKE2b and BLAKE2s hash functions.**
 
 ![blake1](https://cloud.githubusercontent.com/assets/169280/25921238/9bf1877a-3589-11e7-8a93-74b69c3874bb.jpg)
 
@@ -13,7 +13,7 @@ blakejs ES module version
 
 BLAKE is the default family of hash functions in the venerable NaCl crypto library. Like SHA2 and SHA3 but unlike MD5 and SHA1, BLAKE offers solid security. With an optimized assembly implementation, BLAKE can be faster than all of those other hash functions.
 
-Of course, this implementation is in Javascript, so it won't be winning any speed records. More under Performance below. It's short and sweet, less than 500 LOC.
+Of course, this implementation is in JavaScript, so it won't be winning any speed records. More under Performance below. It's short and sweet, less than 500 LOC.
 
 **As far as I know, this package is the easiest way to compute Blake2 in the browser.**
 
@@ -111,13 +111,13 @@ BLAKE2s: 20.4 MB / second
 ¯\_(ツ)_/¯
 ```
 
-If you're using BLAKE2b in server side node.js code, you probably want the [native wrapper](https://www.npmjs.com/package/blake2) which should be able to do several hundred MB / second on the same processor.
+If you're using BLAKE2b in server side Deno code, you probably want the [native wrapper](https://www.npmjs.com/package/blake2) which should be able to do several hundred MB / second on the same processor.
 
 If you're using BLAKE2b in a web app, 15 MB/sec might be fine.
 
-Javascript doesn't have 64-bit integers, and BLAKE2b is a 64-bit integer algorithm. Writing it with`Uint32Array` is not that fast. BLAKE2s is a 32-bit algorithm, so it's a bit faster.
+JavaScript doesn't have 64-bit integers, and BLAKE2b is a 64-bit integer algorithm. Writing it with`Uint32Array` is not that fast. BLAKE2s is a 32-bit algorithm, so it's a bit faster.
 
-If we want better machine code at the expense of gross-looking Javascript, we could use asm.js
+If we want better machine code at the expense of gross-looking JavaScript, we could use asm.js
 
 
 License
