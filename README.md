@@ -111,8 +111,6 @@ BLAKE2s: 20.4 MB / second
 ¯\_(ツ)_/¯
 ```
 
-If you're using BLAKE2b in server side Deno code, you probably want the [native wrapper](https://www.npmjs.com/package/blake2) which should be able to do several hundred MB / second on the same processor.
-
 If you're using BLAKE2b in a web app, 15 MB/sec might be fine.
 
 JavaScript doesn't have 64-bit integers, and BLAKE2b is a 64-bit integer algorithm. Writing it with`Uint32Array` is not that fast. BLAKE2s is a 32-bit algorithm, so it's a bit faster.
