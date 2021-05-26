@@ -1,3 +1,5 @@
+import { hex2bytes } from "./hex2bytes.js"
+
 var ERROR_MSG_INPUT = 'Input must be an string, Buffer or Uint8Array'
 
 // For convenience, let people hash a string, not just a Uint8Array
@@ -5,10 +7,11 @@ function normalizeInput (input) {
   var ret
   if (input instanceof Uint8Array) {
     ret = input
-  } else if (input instanceof Buffer) {
+  } else if (globalThis.Buffer && input instanceof Buffer) {
     ret = new Uint8Array(input)
   } else if (typeof (input) === 'string') {
-    ret = new Uint8Array(Buffer.from(input, 'utf8'))
+    // ret = new Uint8Array(Buffer.from(input, 'utf8'))
+    ret = hex2bytes(input);
   } else {
     throw new Error(ERROR_MSG_INPUT)
   }
@@ -73,9 +76,10 @@ function testSpeed (hashFn, N, M) {
   }
 }
 
-module.exports = {
+const exports = {
   normalizeInput: normalizeInput,
   toHex: toHex,
   debugPrint: debugPrint,
   testSpeed: testSpeed
 }
+export default exports;
