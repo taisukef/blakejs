@@ -1,25 +1,28 @@
-var test = require('tape')
-var toHex = require('./util').toHex
-var util = require('./util')
-var b2s = require('./blake2s')
+import * as t from "https://deno.land/std/testing/asserts.ts";
+import util from "./util.js";
+import { blake as b2s } from "./blake2s.js";
+
+const toHex = util.toHex;
+
 var blake2s = b2s.blake2s
 var blake2sHex = b2s.blake2sHex
 var blake2sInit = b2s.blake2sInit
 var blake2sUpdate = b2s.blake2sUpdate
 var blake2sFinal = b2s.blake2sFinal
 
-test('BLAKE2s basic', function (t) {
+Deno.test('BLAKE2s basic', function () {
   // From the example computation in the RFC
-  t.equal(blake2sHex('abc'),
+  t.assertEquals(blake2sHex('abc'),
     '508c5e8c327c14e2e1a72ba34eeb452f37458b209ed63a294d999b4c86675982')
-  t.equal(blake2sHex(new Uint8Array([97, 98, 99])),
+  t.assertEquals(blake2sHex(new Uint8Array([97, 98, 99])),
     '508c5e8c327c14e2e1a72ba34eeb452f37458b209ed63a294d999b4c86675982')
-  t.equal(blake2sHex(Buffer.from([97, 98, 99])),
+  /*
+  t.assertEquals(blake2sHex(Buffer.from([97, 98, 99])),
     '508c5e8c327c14e2e1a72ba34eeb452f37458b209ed63a294d999b4c86675982')
-  t.end()
+  */
 })
 
-test('BLAKE2s self test', function (t) {
+Deno.test('BLAKE2s self test', function () {
   // Grand hash of hash results
   var expectedHash = [
     0x6A, 0x41, 0x1F, 0x08, 0xCE, 0x25, 0xAD, 0xCD,
@@ -51,8 +54,7 @@ test('BLAKE2s self test', function (t) {
 
   // Compute and compare the hash of hashes
   var finalHash = blake2sFinal(ctx)
-  t.equal(toHex(finalHash), toHex(expectedHash))
-  t.end()
+  t.assertEquals(toHex(finalHash), toHex(expectedHash))
 })
 
 // Returns a Uint8Array of len bytes
@@ -70,11 +72,10 @@ function generateInput (len, seed) {
   return out
 }
 
-test('BLAKE2s performance', function (t) {
+Deno.test('BLAKE2s performance', function () {
   var N = 1 << 22 // number of bytes to hash
   var RUNS = 3 // how often to repeat, to allow JIT to finish
 
   console.log('Benchmarking BLAKE2s(' + (N >> 20) + ' MB input)')
   util.testSpeed(blake2sHex, N, RUNS)
-  t.end()
 })

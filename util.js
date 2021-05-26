@@ -1,5 +1,3 @@
-import { hex2bytes } from "./hex2bytes.js"
-
 var ERROR_MSG_INPUT = 'Input must be an string, Buffer or Uint8Array'
 
 // For convenience, let people hash a string, not just a Uint8Array
@@ -11,7 +9,7 @@ function normalizeInput (input) {
     ret = new Uint8Array(input)
   } else if (typeof (input) === 'string') {
     // ret = new Uint8Array(Buffer.from(input, 'utf8'))
-    ret = hex2bytes(input);
+    ret = new TextEncoder().encode(input)
   } else {
     throw new Error(ERROR_MSG_INPUT)
   }
