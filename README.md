@@ -25,12 +25,10 @@ Other options to consider:
 
 Quick Start
 ---
-```
-$ npm install --save blakejs
-```
-
 ```js
-var blake = require('blakejs')
+import { blake as blake2b } from './blake2b.js';
+import { blake as blake2s } from './blake2s.js';
+
 console.log(blake.blake2bHex('abc'))
 // prints ba80a53f981c4d0d6a2797b69f12f6e94c212f14685ac4b74b12bb6fdbffa2d17d87c5392aab792dc252d5de4533cc9518d38aa8dbf1925ab92386edd4009923
 console.log(blake.blake2sHex('abc'))
@@ -42,7 +40,7 @@ API
 
 ### 1. Use `blake2b` to compute a BLAKE2b hash
 
-Pass it a string, `Buffer`, or `Uint8Array` containing bytes to hash, and it will return a `Uint8Array` containing the hash.
+Pass it a string or `Uint8Array` containing bytes to hash, and it will return a `Uint8Array` containing the hash.
 
 ```js
 // Computes the BLAKE2B hash of a string or byte array, and returns a Uint8Array
@@ -64,15 +62,15 @@ For convenience, `blake2bHex` takes the same arguments and works the same way, b
 ### 2. Use `blake2b[Init,Update,Final]` to compute a streaming hash
 
 ```js
-var KEY = null // optional key
-var OUTPUT_LENGTH = 64 // bytes
-var context = blake2bInit(OUTPUT_LENGTH, KEY)
+const KEY = null // optional key
+const OUTPUT_LENGTH = 64 // bytes
+const context = blake2bInit(OUTPUT_LENGTH, KEY)
 ...
 // each time you get a byte array from the stream:
 blake2bUpdate(context, bytes)
 ...
 // finally, once the stream has been exhausted
-var hash = blake2bFinal(context)
+consnt hash = blake2bFinal(context)
 // returns a 64-byte hash, as a Uint8Array
 ```
 
